@@ -8,7 +8,6 @@ Agent CLI 入口。
 """
 
 import argparse
-import sys
 
 from core.config import settings
 
@@ -43,14 +42,17 @@ def main() -> None:
     print(f"Model: {settings.model_name}")
     print()
 
-    # TODO: Phase 3 实现 Agent Loop 后，在此处启动 Agent
-    # from agent.agent import AgentRunner
-    # runner = AgentRunner(workspace_path=args.workspace, max_steps=args.max_steps)
-    # result = runner.run(args.task)
-    # print(result)
+    from agent.agent import AgentRunner
 
-    print("[Phase 1] Agent Loop 尚未实现，请等待 Phase 3。")
-    sys.exit(0)
+    runner = AgentRunner(
+        workspace_path=args.workspace,
+        max_steps=args.max_steps,
+    )
+    result = runner.run(args.task)
+    print(f"\n{'=' * 60}")
+    print(f"Final Result:")
+    print(f"{'=' * 60}")
+    print(result)
 
 
 if __name__ == "__main__":
