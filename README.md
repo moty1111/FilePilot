@@ -33,7 +33,23 @@ Agent 接收自然语言任务指令，通过自主调用文件工具（列出�
 
 ## 快速开始
 
+> 前端项目仓库：[FilePilotFront](https://github.com/moty1111/FilePilotFront)
+
 ### 1. 环境配置
+
+创建并激活虚拟环境：
+
+```bash
+# Windows (PowerShell)
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+安装依赖：
 
 ```bash
 pip install -r requirements.txt
@@ -44,9 +60,7 @@ pip install -r requirements.txt
 ```env
 OPENAI_API_KEY=sk-xxx
 OPENAI_BASE_URL=https://api.openai.com/v1
-MODEL_NAME=gpt-4o
-MAX_STEPS=20
-WORKSPACE_PATH=./workspace
+MODEL_NAME=glm-5.2
 ```
 
 ### 2. CLI 模式
