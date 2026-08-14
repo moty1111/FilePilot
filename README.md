@@ -202,7 +202,7 @@ Agent 可调用以下 5 个文件操作工具：
 
 ## 公网部署与防滥用
 
-Demo 部署到公网后，API Key 会暴露在公网服务之后。当前采取的防滥用措施：`max_steps`（默认 20）与 `max_file_chars`（20000）从资源侧限制单次任务成本，线程池 `max_workers=4` 限制并发，workspace 重置需无运行中任务。生产环境还应在网关层加简单口令 / 限流 / 单日花费上限（如 API 侧设置 spending limit），这也是本 demo 未覆盖的已知缺口。
+Demo 部署到公网后，API Key 会暴露在公网服务之后。当前采取的防滥用措施：`max_steps`（默认 20）与 `max_file_chars`（20000）从资源侧限制单次任务成本，线程池 `max_workers=4` 限制并发，workspace 重置需无运行中任务。并在.gitignore 排除 .env文件，防止密钥泄露。生产环境还应在网关层加简单口令 / 限流 / 单日花费上限（如 API 侧设置 spending limit），这也是本 demo 未覆盖的已知缺口。
 
 ## 可观测性
 
