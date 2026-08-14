@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 from tools.base import Tool
-from tools.security import HIDDEN_FILES, validate_path
+from tools.security import is_hidden_file, validate_path
 
 
 class ListFilesTool(Tool):
@@ -57,7 +57,7 @@ class ListFilesTool(Tool):
 
                 rel_root = os.path.relpath(root, target)
                 for f in files:
-                    if f in HIDDEN_FILES:
+                    if is_hidden_file(f):
                         continue
                     if rel_root == ".":
                         entries.append(f)
@@ -71,7 +71,7 @@ class ListFilesTool(Tool):
                         entries.append(f"{rel_root}/{d}/")
         else:
             for item in sorted(target.iterdir()):
-                if item.name in HIDDEN_FILES or item.name.startswith("."):
+                if is_hidden_file(item.name) or item.name.startswith("."):
                     continue
                 suffix = "/" if item.is_dir() else ""
                 entries.append(f"{item.name}{suffix}")

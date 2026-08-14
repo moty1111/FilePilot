@@ -125,6 +125,14 @@ class AgentRunner:
             }
             messages.append(assistant_message)
 
+            # 记录 LLM 思考过程到 trace（前端可展示 Agent 的推理链）
+            if content:
+                self.tracer.record(
+                    step=step,
+                    record_type="llm_thinking",
+                    content=self.tracer.summarize(content, 500),
+                )
+
             # 逐个执行工具
             for tc in tool_calls:
                 tool_name = tc["function"]["name"]

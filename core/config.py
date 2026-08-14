@@ -48,6 +48,14 @@ class Settings:
         else (BASE_DIR / _workspace_raw).resolve()
     )
 
+    # workspace 备份路径（重置功能使用），支持相对路径和绝对路径
+    _backup_ws_raw: str = os.getenv("BACKUP_WORKSPACE_PATH", "./workspace2")
+    backup_workspace_path: Path = (
+        Path(_backup_ws_raw).resolve()
+        if Path(_backup_ws_raw).is_absolute()
+        else (BASE_DIR / _backup_ws_raw).resolve()
+    )
+
     # --- 安全配置（固定值，不从环境变量读取） ---
     # 单次 read_file 返回的最大字符数，防止大文件撑爆上下文窗口
     max_file_chars: int = 20000

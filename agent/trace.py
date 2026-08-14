@@ -14,8 +14,14 @@ trace.jsonl 会被 security.HIDDEN_FILES 过滤，Agent 自身看不到它的存
 """
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+def _utc_now_iso() -> str:
+    """返回当前 UTC 时间的 ISO 8601 字符串。"""
+    return datetime.now(timezone.utc).isoformat()
 
 
 class TraceRecorder:
@@ -67,6 +73,7 @@ class TraceRecorder:
         entry: dict[str, Any] = {
             "step": step,
             "type": record_type,
+            "timestamp": _utc_now_iso(),
         }
         if tool is not None:
             entry["tool"] = tool
@@ -80,7 +87,7 @@ class TraceRecorder:
         with open(self.trace_path, "a", encoding="utf-8") as f:
             f.write(line + "\n")
 
-    def summarize(self, text: str, max_len: int = 200) -> str:
+    def summarize(self, text: str, max_len: int = 1000) -> str:
         """
         将长文本截断为摘要，用于 trace 记录。
 

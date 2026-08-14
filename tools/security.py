@@ -6,8 +6,32 @@
 """
 
 from pathlib import Path
+import re
 
-# 这些文件是基础设施产物，不应暴露给 Agent
+# trace 文件模式：trace.jsonl 和 trace_{task_id}.jsonl
+_TRACE_PATTERN = re.compile(r"^trace(_.*)?\.jsonl$")
+
+
+def is_hidden_file(name: str) -> bool:
+    """
+    判断文件是否应对 Agent 隐藏。
+
+    基础设施产物（trace.jsonl、trace_{task_id}.jsonl）不应暴露给 Agent，
+    避免 Agent 读取自身执行记录导致上下文混乱或 prompt injection。
+
+    注意：此函数仅用于 Agent 内部工具过滤。Web API 的 workspace 浏览器
+    不调用此函数，因此 trace 文件对前端可见，便于展示工具调用流程。
+
+    Args:
+        name: 文件名（不含路径）。
+
+    Returns:
+        True 表示该文件应对 Agent 隐藏。
+    """
+    return bool(_TRACE_PATTERN.match(name))
+
+
+# 向后兼容：保留常量供可能的旧引用使用
 HIDDEN_FILES = {"trace.jsonl"}
 
 
